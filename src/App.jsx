@@ -2,40 +2,47 @@ import { useState } from "react"
 import { Trophy, Siren } from "lucide-react"
 
 function App() {
-  const MIN = 1
-  const MAX = 100
-
   const [guess, setGuess] = useState("")
-  const [randomNumber, setRandomNumber] = useState(null)
+  const [randomNumber, setRandomNumber] = useState(
+    Math.floor(Math.random() * 100) + 1
+  )
   const [hasGenerated, setHasGenerated] = useState(false)
   const [result, setResult] = useState(null)
   const [attempts, setAttempts] = useState(0)
 
   const handleGenerate = () => {
-    if (guess === "" || result === "success") return;
-const newNumber = Math.floor(Math.random() * 50) + 1;
+    if (guess === "" || result === "success") return
 
+    const newNumber = Math.floor(Math.random() * 100) + 1
     const guessNum = Number(guess)
 
-    setRandomNumber(newNumber);
-    setHasGenerated(true);
-    setAttempts((prev) => prev + 1);
-    setResult(guessNum === newNumber ? "success" : "fail")
-  };
+    setRandomNumber(newNumber)
+    setHasGenerated(true)
+    setAttempts((prev) => prev + 1)
+
+    if (guessNum === newNumber) {
+      setResult("success")
+    } else {
+      setResult("fail")
+    }
+  }
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleGenerate()
     }
-  };
+  }
 
   const handleReset = () => {
-    setGuess("");
-    setRandomNumber(null)
+    setGuess("")
+
+    const newNumber = Math.floor(Math.random() * 100) + 1
+    setRandomNumber(newNumber)
+
     setHasGenerated(false)
     setResult(null)
     setAttempts(0)
-  };
+  }
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-slate-100 p-6">
@@ -46,13 +53,13 @@ const newNumber = Math.floor(Math.random() * 50) + 1;
         </h1>
 
         <p className="text-slate-500 text-center text-sm mb-6">
-          Guess a number between {MIN} and {MAX}
+          Guess a number between 1 and 100
         </p>
 
         <input
           type="number"
-          min={MIN}
-          max={MAX}
+          min={1}
+          max={100}
           value={guess}
           disabled={result === "success"}
           onChange={(e) => setGuess(e.target.value)}
@@ -97,7 +104,7 @@ const newNumber = Math.floor(Math.random() * 50) + 1;
         {result === "fail" && (
           <div className="flex items-center justify-center gap-2 text-center bg-red-50 border border-red-200 text-red-700 rounded-lg py-2 px-3 text-sm font-medium mb-4">
             <Siren size={18} />
-            You guessed wrong. The number was {randomNumber}.
+            You guessed wrong. The number was {randomNumber}
           </div>
         )}
 
@@ -120,7 +127,7 @@ const newNumber = Math.floor(Math.random() * 50) + 1;
 
       </div>
     </div>
-  );
+  )
 }
 
 export default App
