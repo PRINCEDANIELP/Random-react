@@ -13,9 +13,7 @@ function App() {
 
   const handleGenerate = () => {
     if (guess === "" || result === "success") return;
-
-    const newNumber =
-      Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
+const newNumber = Math.floor(Math.random() * 50) + 1;
 
     const guessNum = Number(guess)
 
